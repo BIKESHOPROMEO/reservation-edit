@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>予約内容の確認・変更</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>予約編集</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h2>ご予約内容の確認</h2>
-  <div id="reservationDetails">読み込み中...</div>
+  <h1>予約編集画面</h1>
 
-  <button id="changeBtn">日程を変更する</button>
-  <button id="cancelBtn">予約をキャンセルする</button>
+  <form id="edit-form">
+  <label for="name">名前：</label>
+  <input type="text" id="name" name="name" required /><br />
+
+  <label for="date">予約日：</label>
+  <input type="date" id="date" name="date" required /><br />
+
+  <label for="time">予約時間：</label>
+  <input type="time" id="time" name="time" required /><br />
+
+  <!-- 他の項目も必要に応じて追加 -->
+
+  <button type="submit">更新する</button>
+</form>
+
+<div id="loading">読み込み中...</div>
 
   <script src="edit.js"></script>
 </body>
