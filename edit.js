@@ -61,7 +61,7 @@ document.querySelector("#edit-form").addEventListener("submit", async (e) => {
   selectedDateTime: document.querySelector("#date").value + " " + document.querySelector("#time").value
 });
 
-const endpoint = "https://script.google.com/macros/s/AKfycbxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/exec";
+const endpoint = "https://script.google.com/macros/s/AKfycbyE1-J7AqYT9v5SwHZtcC-SjH73CI11KG8jR0dES6fOkEMnZhvsx9gMplEHatxVNRaFaw/exec";
 
 try {
   const res = await fetch(endpoint, {
