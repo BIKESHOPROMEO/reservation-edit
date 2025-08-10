@@ -6,7 +6,7 @@ function getReservationId() {
 
 // GASから予約情報を取得
 async function fetchReservationData(reservationId) {
-  const endpoint = "https://script.google.com/macros/s/AKfycbxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/exec";
+  const endpoint = "https://script.google.com/macros/s/AKfycbyE1-J7AqYT9v5SwHZtcC-SjH73CI11KG8jR0dES6fOkEMnZhvsx9gMplEHatxVNRaFaw/exec";
   const url = `${endpoint}?action=get&id=${reservationId}`;
 
   try {
