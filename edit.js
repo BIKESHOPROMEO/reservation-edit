@@ -28,8 +28,13 @@ function populateForm(data) {
   document.querySelector("#workType").value = data.workType || "";
   document.querySelector("#note").value = data.note || "";
   document.querySelector("#date").value = data.date || "";
-  document.querySelector("#time").value = data.time || "";
-}
+
+  const time = new Date(data.time).toLocaleTimeString("ja-JP", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  });
+  document.querySelector("#time").value = time || "";
 }
 
 // 初期化処理
@@ -41,36 +46,47 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 
   const data = await fetchReservationData(id);
-  if (data) populateForm(data);
+  if (!data) return;
+
+  if (data.error) {
+    alert("予約情報が見つかりませんでした。");
+    return;
+  }
+
+  populateForm(data);
 });
 
-// 更新処理（オプション）
-document.querySelector("#edit-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
+// 更新処理
+const form = document.querySelector("#edit-form");
+if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  const updatedData = new URLSearchParams({
-  action: "update",
-  id: getReservationId(),
-  name: document.querySelector("#name").value,
-  date: document.querySelector("#date").value,
-  phone: document.querySelector("#phone").value,
-  email: document.querySelector("#email").value,
-  carModel: document.querySelector("#carModel").value,
-  workType: document.querySelector("#workType").value,
-  note: document.querySelector("#note").value,
-  selectedDateTime: document.querySelector("#date").value + " " + document.querySelector("#time").value
-});
+    const updatedData = new URLSearchParams({
+      action: "update",
+      id: getReservationId(),
+      name: document.querySelector("#name").value,
+      date: document.querySelector("#date").value,
+      phone: document.querySelector("#phone").value,
+      email: document.querySelector("#email").value,
+      carModel: document.querySelector("#carModel").value,
+      workType: document.querySelector("#workType").value,
+      note: document.querySelector("#note").value,
+      selectedDateTime: document.querySelector("#date").value + " " + document.querySelector("#time").value
+    });
 
-const endpoint = "https://script.google.com/macros/s/AKfycbyE1-J7AqYT9v5SwHZtcC-SjH73CI11KG8jR0dES6fOkEMnZhvsx9gMplEHatxVNRaFaw/exec";
+    const endpoint = "https://script.google.com/macros/s/AKfycbyE1-J7AqYT9v5SwHZtcC-SjH73CI11KG8jR0dES6fOkEMnZhvsx9gMplEHatxVNRaFaw/exec";
 
-try {
-  const res = await fetch(endpoint, {
-    method: "POST",
-    body: updatedData,
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        body: updatedData,
+      });
+      const resultText = await res.text();
+      alert(resultText);
+    } catch (err) {
+      console.error("更新失敗:", err);
+      alert("更新に失敗しました。");
+    }
   });
-  const resultText = await res.text();
-  alert(resultText); // GAS側が "更新完了" を返す
-} catch (err) {
-  console.error("更新失敗:", err);
-  alert("更新に失敗しました。");
 }
