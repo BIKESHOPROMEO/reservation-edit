@@ -84,9 +84,16 @@ document.addEventListener("DOMContentLoaded", () => {
           cell.addEventListener("click", () => {
             const selectedDate = d.date;
             const selectedTime = hour;
-            const url = new URL("https://yoyaku-form.vercel.app/");
+
+	    // URLからidを取得
+  	const params = new URLSearchParams(window.location.search);
+  	const id = params.get("id");
+
+            const url = new URL("https://henko-form.vercel.app/");
 		url.searchParams.set("date", selectedDate);
 		url.searchParams.set("time", selectedTime);
+		if (id) url.searchParams.set("id", id); // ← ここがポイント！
+
 		window.location.href = url.toString();
 	});
         } else {
