@@ -135,3 +135,4 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchAvailability().then(() => {
   renderCalendar();
 });
+});
